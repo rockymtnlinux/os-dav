@@ -9,22 +9,25 @@ MAINTAINER Mike Meador ( rockymtnlinux@gmail.com )
 ENV OS_DAV 0.01 
 
 # TODO: Set labels used in OpenShift to describe the builder image
-LABEL io.k8s.description="Platform for building xyz" \
-      io.k8s.display-name="builder x.y.z" \
+LABEL io.k8s.description="WebDAV container for Openshift/kubernetes" \
+      io.k8s.display-name="os-dav 0.01 " \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,x.y.z,etc."
+      io.openshift.tags="os-dav,0.01"
 
 # TODO: Install required packages here:
-# RUN yum install -y ... && yum clean all -y
+RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+    && yum install -y nginx-1.10.2 nginx-all-modules-1.10.2 tar \
+    && yum clean all -y
 
 # TODO (optional): Copy the builder files into /opt/app-root
 # COPY ./<builder_folder>/ /opt/app-root/
 
 # TODO: Copy the S2I scripts to /usr/libexec/s2i, since openshift/base-centos7 image sets io.openshift.s2i.scripts-url label that way, or update that label
-# COPY ./.s2i/bin/ /usr/libexec/s2i
+COPY ./.s2i/bin/ /usr/libexec/s2i
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
- RUN chown -R 1001:1001 /opt/app-root
+RUN mkdir /data \
+    && chown -R 1001:1001 /data /etc/nginx /var/lib/nginx /var/log/nginx
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001

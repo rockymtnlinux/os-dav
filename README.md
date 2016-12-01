@@ -16,3 +16,17 @@ It turns that there is are several Docker containers that provide WebDAV service
 1. Oauth support for authenticating using Openshift embedded Oauth server so that users can login using their Openshift account.
 2. HTTPS/TLS support
 3. Openshift template
+
+
+# Requirements:
+
+1. [Download s2i binaries] (https://github.com/openshift/source-to-image/releases) and install them in your preferred bin directory.
+2. Install the 'make' utility using your package manager of choice
+3. A running docker instance.
+
+2. *Disclaimer:  I may have the intended s2i process totally warped at this point.*  
+
+# To build:
+1. Change into the os-dav directory
+2. Run 'make' against the Makefile.  This creates the builder image.
+3. Run 's2i build . os-dav-builder os-dav
