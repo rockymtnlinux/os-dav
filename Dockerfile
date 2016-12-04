@@ -26,8 +26,8 @@ RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.n
 COPY ./.s2i/bin/ /usr/libexec/s2i
 
 # TODO: Drop the root user and make the content of /opt/app-root owned by user 1001
-RUN mkdir /data \
-    && chown -R 1001:1001 /data /etc/nginx /var/lib/nginx /var/log/nginx
+RUN mkdir /data /var/run/nginx \
+    && chown -R 1001:1001 /data /etc/nginx /var/lib/nginx /var/run/nginx /var/log/nginx
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
