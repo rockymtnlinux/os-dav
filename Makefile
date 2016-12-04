@@ -1,11 +1,11 @@
 
 IMAGE_NAME = os-dav-builder
 
-build-no-cache:
-	docker build --no-cache -t $(IMAGE_NAME) .
-
 build:
 	docker build -t $(IMAGE_NAME) .
+
+build-no-cache:
+	docker build --no-cache -t $(IMAGE_NAME) .
 
 .PHONY: test
 test:
